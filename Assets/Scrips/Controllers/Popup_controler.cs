@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneTemplate;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class Popup_controler : MonoBehaviour
 {
@@ -10,8 +9,9 @@ public class Popup_controler : MonoBehaviour
     [SerializeField] private List<GameObject> popupList;
     [SerializeField] private float popupSpawnTime = 5f;
     private float popupSpawnTimer = 0;
-    private int numPopupSpawned = 1;
 
+    [Header("EVENT TRIGGER")]
+    public UnityEvent OnPopupSpawn;
 
     private RectTransform rectTrans;
 
@@ -40,12 +40,11 @@ public class Popup_controler : MonoBehaviour
         {
             Debug.LogError("No Popup in the list");
         }
-        numPopupSpawned++;
 
-        // Random between all pop
+        // random popup
         int newPopUpId = Random.Range(0, popupList.Count);
 
-        // Get the panel's rectangle in LOCAL space
+        // get panel rectangle in LOCAL space
         Rect rect = rectTrans.rect;
 
         float sizeX = popupList[newPopUpId].GetComponent<RectTransform>().rect.size.x;
@@ -57,21 +56,21 @@ public class Popup_controler : MonoBehaviour
         float minY = rect.yMin + sizeY / 2;
         float maxY = rect.yMax - sizeY / 2;
 
-        // Generate random position
+        // generate rndom position
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
 
-        //Debug.Log("RectX: min" + rect.xMin + ", max " + rect.xMax);
-        //Debug.Log("RectY: min" + rect.yMin + ", max " + rect.yMax);
-        //Debug.Log("Random X: " + randomX + "Random Y: " + randomY);
-
-        Vector2 randomPos = new Vector3(randomX, randomY, numPopupSpawned);
+        Vector2 randomPos = new Vector3(randomX, randomY);
 
         GameObject temp = Instantiate(popupList[newPopUpId], rectTrans );
 
         temp.transform.localPosition = randomPos;
+        OnPopupSpawn.Invoke();
 
-        temp.GetComponent<RawImage>().color = new Color(Random.Range(0, 255), Random.Range(0, 255), Random.Range(0, 255));
+        Image tempImage = temp.GetComponent<Image>();
+
+        Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1f);
+        tempImage.color = c;
 
         Debug.Log("Spawn powerUp: " + temp);
     }

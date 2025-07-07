@@ -428,7 +428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupList:
   - {fileID: 5788383846116810626, guid: 4004aea0a916db24ca98af3c5ca92b29, type: 3}
-  popupSpawnTime: 5
+  popupSpawnTime: 1
 --- !u!114 &1254927413
 MonoBehaviour:
   m_ObjectHideFlags: 0
