@@ -20,6 +20,7 @@ public class Popup_controler : MonoBehaviour
         rectTrans = GetComponent<RectTransform>();
     }
 
+
     private void Update()
     {
         if(popupSpawnTimer >= popupSpawnTime)
