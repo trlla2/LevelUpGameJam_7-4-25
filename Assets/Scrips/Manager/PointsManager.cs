@@ -1,6 +1,7 @@
-
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 
 
 public class PointsManager : MonoBehaviour
@@ -20,7 +21,8 @@ public class PointsManager : MonoBehaviour
     }
 
     private int score = 0;
-    private int scoreGoal;
+    [Header("SETUP")]
+    [SerializeField , Min(1)]private int scoreGoal;
 
     // events that you can subcribe to execute a function everytime ... hapens
     public delegate void GetChangeScore(int points);
@@ -45,7 +47,7 @@ public class PointsManager : MonoBehaviour
     {
         if(score >= scoreGoal)
         {
-            OnScoreGoalReach.Invoke();
+            OnScoreGoalReach?.Invoke();
         }
     }
 
@@ -54,7 +56,8 @@ public class PointsManager : MonoBehaviour
     public void AddPoints(int p) 
     { 
         score += p;
-        OnScoreChange.Invoke(score);
+        OnScoreChange?.Invoke(score);
+        Debug.Log("Current Points" + score);
     }
 
     public void SetPointsGoal(int pG) { scoreGoal = pG; }
