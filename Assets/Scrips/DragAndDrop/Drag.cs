@@ -14,7 +14,7 @@ public class Drag : MonoBehaviour
 
     private BoxCollider2D coll;
 
-    private Vector3 resetPosition;
+
     [SerializeField] private float snapPuzzle = 1.5f;
 
     private TMP_Text text;
@@ -22,7 +22,7 @@ public class Drag : MonoBehaviour
  
     void Start()
     {
-        resetPosition = this.transform.position;
+        
         coll = GetComponent<BoxCollider2D>();
         text = GetComponent<TMP_Text>();
 
@@ -73,22 +73,16 @@ public class Drag : MonoBehaviour
           
 
             //GameObject.Find("WinManager").GetComponent<winCount>().AddPoints();
-            correctForm.SetActive(false);
+            //correctForm.SetActive(false);
             coll.enabled = false;
+
+            GetComponent<SC_PlaceDetector>().IsSnaped();
+
             Debug.Log("Correct");
         }
-        else
-        {
-            Debug.Log("Reset");
-            if (text != null)
-                text.color = Color.black;
-
-
-         
-
-            this.transform.position = new Vector3(resetPosition.x, resetPosition.y, resetPosition.z);
-        }
+        
     }
+
+
+   
 }
-
-
